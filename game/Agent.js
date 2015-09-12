@@ -4,7 +4,6 @@ var Agent = function(name, userData) {
 	this.mUserData = userData;
 	
 	this.velocity = new OE.Vector3();
-	this.auxVec3 = new OE.Vector3();
 };
 Agent.prototype = {
 	mUserData: undefined,
@@ -18,19 +17,18 @@ Agent.prototype = {
 	runSpeed: 0.05,
 	
 	onCreate: function() {
+		// Add a sphere for body.
 		var obj = this.addChild(new OE.Sphere(1.0, 12));
 		obj.mMaterial = OE.MaterialManager.getLoaded("DefaultWhite");
+		
+		// Add a sphere forward, to mark facing direction.
 		obj = this.addChild(new OE.Sphere(0.5, 8));
 		obj.setPosf(0.0, 0.0, 1.0);
 		obj.mMaterial = OE.MaterialManager.getLoaded("DefaultWhite");
 		
-		this.setPosf(Math.random() * 20.0 - 10.0, 1.0,
-					 Math.random() * 20.0 - 10.0);
-		
-		obj.mMtlParams = new OE.MtlParams();
-		obj.mMtlParams.mUniforms = {
-			diffuse: [1,1,1]
-		};
+		// Random position.
+		this.setPosf(Math.random() * 100.0 - 50.0, 1.0,
+					 Math.random() * 100.0 - 50.0);
 	},
 	
 	turn: function(angleDelta) {
@@ -57,7 +55,6 @@ Agent.prototype = {
 		this.velocity.addBy(direction);
 	},
 	
-	auxVec3: undefined,
 	onUpdate: function() {
 		var pos = this.getPos();
 		pos.addBy(this.velocity);
@@ -80,8 +77,7 @@ Agent.prototype = {
 			}
 		}
 		var rot = this.getRot();
-		this.auxVec3.setf(0.0, 1.0, 0.0);
-		rot.fromAxisAngle(this.auxVec3, this.facingAngle*OE.Math.RAD_TO_DEG);
+		rot.fromAxisAngle(OE.Vector3.UP, this.facingAngle*OE.Math.RAD_TO_DEG);
 		this.setRot(rot);
 	}
 };

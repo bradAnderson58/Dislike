@@ -27,14 +27,14 @@ NpcAgent.prototype = {
 			var d = Math.sqrt(d2);
 			var nx = dx/d;
 			var ny = dy/d;
-			this.walk(new OE.Vector3(0.0, 0.0, 1.0), 0.0, true);
+			this.walk(OE.Vector3.FORWARD, 0.0, true);
 			this.facePos(this.target);
 		}
 	},
 	
 	findNewTarget: function() {
-		this.target.setf(Math.random() * 20.0 - 10.0, 0.0,
-						 Math.random() * 20.0 - 10.0);
+		this.target.setf(Math.random() * 100.0 - 50.0, 0.0,
+						 Math.random() * 100.0 - 50.0);
 	}
 };
 OE.Utils.defClass(NpcAgent, Agent);

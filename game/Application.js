@@ -18,23 +18,23 @@ Application.prototype = {
 	loadResources: function() {
 		OE.ResourceManager.declareLibrary("data/MyLibrary.json", function() {
 		OE.ResourceManager.declareLibrary("data/Default/Library.json", function() {
-		OE.ResourceManager.declareLibrary("data/Lamborghini/Lib.json",
-			function() {
-				this.initScene();
-			}.bind(this)
-		);
+		OE.ResourceManager.declareLibrary("data/Lamborghini/Lib.json", function() {
+		
+			this.initScene();
+		
+		}.bind(this));
 		}.bind(this));
 		}.bind(this));
 	},
 	initScene: function() {
-		this.mCamera.setPosf(0.0, 0.0, 20.0);
+		this.mCamera.setPosf(0.0, 0.0, 0.0);
 		this.mScene.addObject(this.mCamera);
 		
 		var obj = new OE.Entity("Lamborghini");
 		obj.setScalef(0.125, 0.125, 0.125);
 		this.mScene.addObject(obj);
 		
-		var obj = this.mScene.addObject(new OE.TerrainPatch(100.0, 100.0, 32, 32));
+		var obj = this.mScene.addObject(new OE.TerrainPatch(100.0, 100.0, 16, 16));
 		obj.mMaterial = OE.MaterialManager.getLoaded("DefaultWhite");
 		
 		this.player = new Agent();
@@ -42,7 +42,6 @@ Application.prototype = {
 		
 		var fb = new FacebookManager();
 		var app = this;
-		
 		fb.init(function() {
 			fb.getFriends(20, function(data) {
 				app.addPeople(data);
@@ -51,6 +50,7 @@ Application.prototype = {
 	},
 	
 	addPeople: function(people) {
+		// Add a new NPC Agent for each person.
 		for (var i=0; i<people.length; i++) {
 			var fbData = people[i];
 			var name = fbData.name;
@@ -72,11 +72,13 @@ Application.prototype = {
 		if (this.mMouseDown[0]) {
 			var k = 0.1;
 			
+			// Get mouse deltas.
 			var dx = x - this.xprev;
 			var dy = y - this.yprev;
 			this.xprev = x;
 			this.yprev = y;
 			
+			// Perform mouselook.
 			// TODO: set last parameter to true, and implement axis locking.
 			this.mCamera.mouseLook(-dx, -dy, k, false);
 		}
@@ -87,6 +89,7 @@ Application.prototype = {
 	a: new OE.Vector3(),
 	onUpdate: function() {
 		if (this.player) {
+			// WASD/FR controls, QE swivel.
 			var ax = 0.0, ay = 0.0, az = 0.0, aRot = 0.0;
 			if (this.mKeyDown[OE.Keys.A]) ax -= 1.0;
 			if (this.mKeyDown[OE.Keys.D]) ax += 1.0;
@@ -99,7 +102,9 @@ Application.prototype = {
 			if (this.mKeyDown[OE.Keys.E]) aRot += 1.0;
 			
 			if (ax !== 0.0 || ay !== 0.0 || az !== 0.0) {
+				// Run or walk?
 				var speed = this.mKeyDown[16] ? 1.0 : 0.1;
+				
 				this.a.setf(-ax, -ay, -az);
 				this.player.walk(this.a, speed, true);
 			}
@@ -109,6 +114,7 @@ Application.prototype = {
 				this.mCamera.rotAccel(this.rota);
 			}
 			
+			// Set camera behind player in opposite direction of camera rotation.
 			var pos = this.mCamera.getPos();
 			pos.set(this.player.getPos());
 			this.a.set(this.mCamera.getRot().getConjugate().getForward());
@@ -117,17 +123,12 @@ Application.prototype = {
 			pos.y += 0.75;
 			this.mCamera.setPos(pos);
 			
+			// Make player try to face camera rotation.
 			var pos = this.a;
 			pos.mulByf(-1.0);
 			pos.addBy(this.player.getPos());
 			this.player.facePos(pos);
 		}
-		/*
-		var left = this.mKeyDown[OE.Keys.Q];
-		var right = this.mKeyDown[OE.Keys.E];
-		if (left || right) {
-			this.mCamera.rotAccel
-		}*/
 	}
 };
 OE.Utils.defClass(Application, OE.BaseApp3D);

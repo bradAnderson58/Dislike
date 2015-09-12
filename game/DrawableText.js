@@ -27,7 +27,7 @@ OE.DrawableText.prototype = {
 	},
 	
 	updateVBO: function() {
-		
+		// TODO: Unfinished
 	},
 };
 OE.Utils.defClass(OE.DrawableText, OE.GameObject, OE.Renderable);
