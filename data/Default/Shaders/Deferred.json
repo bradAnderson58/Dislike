@@ -1,0 +1,16 @@
+
+{
+	"shader": {
+		"vert": "Sources/Deferred.vert",
+		"frag": "Sources/Deferred.frag",
+		"attributes": {
+			"vertPosition":	"POSITION"
+		},
+		"uniforms": {
+			"positionSampler":	{"INT":		0},
+			"normalSampler":	{"INT":		1},
+			"albedoSampler":	{"INT":		2},
+			"lightSampler":		{"INT":		3}
+		}
+	}
+}

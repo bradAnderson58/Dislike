@@ -1,0 +1,14 @@
+{
+	"Models": {
+		"Lamborghini": "Models/Lamborghini.model"
+	},
+	"Materials": {
+		"acmat_0": "Materials/acmat_0.json",
+		"acmat_1": "Materials/acmat_1.json",
+		"acmat_2": "Materials/acmat_2.json",
+		"acmat_3": "Materials/acmat_3.json",
+		"acmat_4": "Materials/acmat_4.json",
+		"acmat_5": "Materials/acmat_5.json",
+		"acmat_6": "Materials/acmat_6.json"
+	}
+}

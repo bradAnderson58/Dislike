@@ -1,0 +1,30 @@
+{
+	"material": {
+		"passes": [
+			{
+				"shader": "Solid",
+				"textures": {
+					"0": "White",
+					"1": "Flat_norm",
+					"2": "White",
+					"3": "Chrome_env"
+				},
+				"uniforms": {
+					"diffuse": [
+						"1.000000",
+						"0.000000",
+						"0.000000"
+					],
+					"specular": [
+						"1.000000",
+						"1.000000",
+						"1.000000"
+					],
+					"shininess": "9.999999",
+					"emission": "0.000000",
+					"reflectivity": 0.125
+				}
+			}
+		]
+	}
+}
